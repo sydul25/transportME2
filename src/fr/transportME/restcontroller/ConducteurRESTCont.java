@@ -75,10 +75,8 @@ public class ConducteurRESTCont {
 											@RequestBody Conducteur conducteur, BindingResult bindingResult) {
 
 		// TODO securite de la modif
-//		System.out.println(myClient.getNomUtil());
 		conducteur.setIdUtil(idConducteur);
 		conducteur = this.conducteurDAO.save(conducteur);
-//		System.out.println(myClient.getNomUtil());
 		if (conducteur == null)
 			return new ResponseEntity<Conducteur>( HttpStatus.BAD_REQUEST);
 		
