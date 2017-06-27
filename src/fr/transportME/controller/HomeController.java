@@ -273,6 +273,7 @@ public class HomeController {
 				//
 				
 				System.out.println("==> retour formulaire inscription");
+				// TODO voir pour revenir sans perdre les infos saisies et mettre en rouge les infos en erreur
 				return "inscription";
 			}
 			

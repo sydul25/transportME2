@@ -19,6 +19,7 @@ $jq311(document).ready(function($) {
 //		}
 //	}
 	
+	// permet de montre la section conducteur ou client, suivant le choix dans la liste deroulante
 	$("#mySelect").on('change', function() {
 		
 		console.log($("#mySelect").val());
