@@ -356,7 +356,7 @@ $jq311(document).ready(function($) {
 				course.idConducteur = $("input[name='idConducteur']").val();   
 				
 				$.ajax({
-							url : 'api/courses/recuperer?idConducteur='+course.idConducteur,  
+							url : 'api/courses/recuperer?idConducteur='+course.idConducteur,  // recuperation course attribuee à un conducteur et non commencee
 							error : function(request, error) {
 								console.log("Erreur dans courses attribuees - responseText: "
 										+ request.responseText);

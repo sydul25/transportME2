@@ -54,7 +54,7 @@ public class CourseDAO extends DAO<Course> {
 			myQuery.setParameter("idConducteur", idConducteur);
 			return myQuery.getSingleResult();
 		} catch (Exception e) {
-			System.out.println("pbe findByidConducteur " + e);
+			// System.out.println("pbe findByidConducteur " + e);
 			return null;
 		}
 	}
