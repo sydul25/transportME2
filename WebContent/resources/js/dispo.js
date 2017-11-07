@@ -7,8 +7,8 @@ $jq311(document).ready(function($) {
 
 		var map = new google.maps.Map(document.getElementById('map'), {
 			center : {
-				lat : 50.632492,
-				lng : 3.069908
+				lat : 50.504689,
+				lng : 3.003210
 			},
 			zoom : 15,
 			mapTypeId : google.maps.MapTypeId.ROADMAP
@@ -38,10 +38,10 @@ $jq311(document).ready(function($) {
 								
 													//On cache les boutons 
 													if (data != null)
-													$('#demarrercourse').show();
-													$('#terminercourse').show();
-													$('#acceptation').show();
-													$('#refus').show();
+														
+													// dégriser accepter et refuser si statutCourse est null
+													console.log("data.statutCourse "+data.statutCourse);
+													console.log("data.dateDepart "+data.dateDepart);
 													
 													var image = {
 														url : 'resources/images/client.png',   
@@ -63,8 +63,31 @@ $jq311(document).ready(function($) {
 																	});
 															
 
+															// on active ou non les boutons
+																acceptation = null;
+																refus = null;
+																demarrerCourse = null;
+																terminercourse = null;
+																if (data.statutCourse == null)
+																	{
+																		demarrerCourse = "disabled";
+																		terminercourse = "disabled";
+																	}
+																else
+																   if (data.dateDepart == null) 
+																	   {
+																		acceptation = "disabled";
+																		refus = "disabled";
+																		terminercourse = "disabled";
+																	   }
+																   else
+																	   {
+																		acceptation = "disabled";
+																		refus = "disabled";
+																		demarrercourse = "disabled";
+																	   }
 															
-															
+															// constitution legende																														
 															var contentInfo =  "<input type='hidden' id='courseId' value='"+data.idcourse+"'>"
 															+ "<h4> Passager: "+ data.client.prenomUtil+" "+data.client.nomUtil+"</h4>"
 															+ "<h4> Départ: "+ data.lieuDepart+"</h4>"
@@ -72,7 +95,9 @@ $jq311(document).ready(function($) {
 															+ '<div class="btnAcceptation">'
 															+	'<button id="submitAcceptation"'
 															+	'	class="btn waves-effect waves-light orange darken-4" type="submit"'
-															+ '		name="acceptation">'
+															+ '		name="acceptation" '
+															+ acceptation
+															+ '>'
 															+	'	Acceptation <i class="material-icons right">send</i>'
 															+	'</button>'
 															+'</div>'	
@@ -81,7 +106,9 @@ $jq311(document).ready(function($) {
 															+	'<div class="btnRefus">'
 															+	'	<button id="submitRefus"'
 															+	'		class="btn waves-effect waves-light orange darken-4" type="submit"'
-															+	'		name="refus">'
+															+	'		name="refus" '
+															+  refus
+															+ 	'>'
 															+	'		Refus <i class="material-icons right">send</i>'
 															+	'	</button>'
 															+	'</div>'
@@ -91,7 +118,9 @@ $jq311(document).ready(function($) {
 															+	'<div class="btnDemarrercourse">'
 															+	'	<button id="submitDemarrerCourse"'
 															+	'		class="btn waves-effect waves-light orange darken-4" type="submit"'
-															+	'		name="Demarrer Course">'
+															+	'		name="Demarrer Course"'
+															+ demarrerCourse
+															+ 	'>'
 															+	'		Démarrer course <i class="material-icons right">send</i>'
 															+	'	</button>'
 															+	'</div>'
@@ -101,7 +130,9 @@ $jq311(document).ready(function($) {
 															+	'<div class="btnTerminercourse">'
 															+	'	<button id="submitTerminerCourse"'
 															+	'		class="btn waves-effect waves-light orange darken-4" type="submit"'
-															+	'		name="Terminer Course">'
+															+	'		name="Terminer Course"'
+															+ terminercourse
+															+  '>'
 															+	'		Terminer course <i class="material-icons right">send</i>'
 															+	'	</button>'
 															+	'</div>'
@@ -134,7 +165,9 @@ $jq311(document).ready(function($) {
 																			error: function() {
 																				$("#messageAction").html("Echec acceptation de course.");
 																			}
-																	});			
+																	});	
+																	
+																    
 																}
 																$('#submitAcceptation').on('click', modifStatutAccept);
 																
@@ -181,6 +214,13 @@ $jq311(document).ready(function($) {
 																				$("#messageAction").html("Echec démarrage course.");
 																			}
 																	});
+																	
+																	// TODO à essayer : on arrete le timer
+																	/*if(data.length > 0 && idIntervalDispo) {
+																		clearInterval(idIntervalDispo);
+																		idIntervalDispo = false;
+																		console.log("STOP TIMER REFRESH DISPO")
+																	}*/
 																}
 																
 																$('#submitDemarrerCourse').on('click', demarrerCourse);
@@ -219,6 +259,7 @@ $jq311(document).ready(function($) {
 	
 							}
 						});
+				
 	
 		}
 		

@@ -38,6 +38,8 @@
 	<script>var $jq311 = jQuery.noConflict();</script>	
 	<script src="${ pageContext.request.contextPath }/resources/js/materialize.js"></script>
 	
+	<script src="${ pageContext.request.contextPath }/resources/js/validate.js"></script>
+	
 	<tiles:insertAttribute name="body" />
 </body>
 </html>

@@ -231,7 +231,7 @@ $jq311(document).ready(function($) {
 				return;
 			}
 	
-			//On rend visible l'input de destination
+			//On rend visible l'input de destination 
 			$('#inputDestination').show();
 			
 	

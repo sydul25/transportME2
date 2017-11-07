@@ -29,7 +29,7 @@
 					<input type="text" id="prenomUtil" name="prenomUtil" value="${ client.prenomUtil }"><br><br> 
 					
 					<label for="dateNaissanceUtil">Votre date de naissance: </label> 
-					<input type="text" id="dateNaissanceUtil" name="dateNaissanceUtil" value="${ client.dateNaissanceUtil }"><br><br> 
+					<input type="date" id="dateNaissanceUtil" name="dateNaissanceUtil" value="${ client.dateNaissanceUtil }"><br><br> 
 					
 					<label for="telephoneUtil">Téléphone: </label> 
 					<input type="text" id="telephoneUtil" name="telephoneUtil" value="${ client.telephoneUtil }"><br> <br> 
@@ -41,7 +41,7 @@
 					<input type="text" id="noCBCli" name="noCBCli" value="${ client.noCBCli }"><br> <br>
 					 
 					<label for="dateExpirationCli">Date d'Expiration CB: </label> 
-					<input type="text" id="dateExpirationCli" name="dateExpirationCli" value="${ client.dateExpirationCli }"><br> <br>
+					<input type="date" id="dateExpirationCli" name="dateExpirationCli" value="${ client.dateExpirationCli }"><br> <br>
 					
 					<label for="cryptogrammeCli">Cryptogramme: </label> 
 					<input type="text" id="cryptogrammeCli" name="cryptogrammeCli" value="${ client.cryptogrammeCli }"><br> <br>

@@ -39,6 +39,7 @@ public class UtilisateurDAO extends DAO<Utilisateur>{
 
 	@Override
 	public Utilisateur save(Utilisateur object) {
+		System.out.println("save Utilisateur "+object);
 		return this.em.merge(object);
 	}
 	

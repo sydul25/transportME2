@@ -62,9 +62,11 @@
 			</div>
 		</div>
 	</div>
+	chemin ${ pageContext.request.contextPath }
 	<!--  pour clic sur les photos  -->
 	<script type="text/javascript" src="${ pageContext.request.contextPath }/resources/js/jquery-1.3.2.min.js"></script>	
 	<script type="text/javascript" src="${ pageContext.request.contextPath }/resources/js/jquery.jslickmenu.js"></script>
+		<script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.js"></script>
 	<script type="text/javascript">
 		var $jq132 = jQuery.noConflict();
 		$jq132(document).ready(function() {

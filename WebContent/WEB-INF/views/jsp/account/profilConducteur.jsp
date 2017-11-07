@@ -2,6 +2,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
     
+    
 
 
 <div class="presentation">
@@ -13,45 +14,45 @@
 	<fieldset>
 		<div class="inscription">
 			<div id="divprofilclient">
-				<form:form id="dispo" action="dispo" >
+				<form id="dispo" action="dispo" >
 				
-					<input type="hidden" id="idUtil" name="idUtil" value="${ conducteur.idUtil }"><br> <br>
+					<input type="hidden" id="idUtil" name="idUtil" value="${ conducteur.idUtil }" required><br> <br>
 	
 					<label for="loginUtil"> Votre Login: </label> 
-					<input type="text" id="loginUtil" name="loginUtil" value="${ conducteur.loginUtil }"><br><br> 
+					<input type="text" id="loginUtil" name="loginUtil" value="${ conducteur.loginUtil }" required><br><br> 
 					
 					<label for="mdpUtil">Votre mot de passe: </label> 
-					<input type="password" id="mdpUtil" name="mdpUtil" value="${ conducteur.mdpUtil }"><br> <br> 
+					<input type="password" id="mdpUtil" name="mdpUtil" value="${ conducteur.mdpUtil }" required><br> <br> 
 					
 					<label for="nomUtil">Votre Nom de famille: </label> 
-					<input type="text" id="nomUtil" name="nomUtil" value="${ conducteur.nomUtil }"><br><br> 
+					<input type="text" id="nomUtil" name="nomUtil" value="${ conducteur.nomUtil }" required><br><br> 
 					
 					<label for="prenomUtil">Votre prénom: </label> 
-					<input type="text" id="prenomUtil" name="prenomUtil" value="${ conducteur.prenomUtil }"><br><br> 
+					<input type="text" id="prenomUtil" name="prenomUtil" value="${ conducteur.prenomUtil }" required><br><br> 
 					
 					<label for="dateNaissanceUtil">Votre date de naissance: </label> 
-					<input type="text" id="dateNaissanceUtil" name="dateNaissanceUtil" value="${ conducteur.dateNaissanceUtil }"><br><br> 
+					<input type="date" id="dateNaissanceUtil" name="dateNaissanceUtil" value="${ conducteur.dateNaissanceUtil }" required><br><br> 
 					
 					<label for="telephoneUtil">Téléphone: </label>  
-					<input type="text" id="telephoneUtil" name="telephoneUtil" value="${ conducteur.telephoneUtil }"><br><br> 
+					<input type="text" id="telephoneUtil" name="telephoneUtil" value="${ conducteur.telephoneUtil }" required><br><br> 
 					
 					<label for="emailUtil">Votre e-mail: </label> 
-					<input type="text" id="emailUtil" name="emailUtil" value="${ conducteur.emailUtil }"> <br> <br>
+					<input type="email" id="emailUtil" name="emailUtil" value="${ conducteur.emailUtil }" required> <br> <br>
 					
 					<label for="anneePermis">Année Permis de conduire: </label> 
-					<input type="text" id="anneePermis" name="anneePermis" value="${ conducteur.anneePermis }"><br> <br> 
+					<input type="text" id="anneePermis" name="anneePermis" value="${ conducteur.anneePermis }" required><br> <br> 
 					
 					<label for="marqueVoiture">Marque de voiture: </label> 
-					<input type="text" id="marqueVoiture" name="marqueVoiture" value="${ conducteur.marqueVoiture }"><br> <br> 
+					<input type="text" id="marqueVoiture" name="marqueVoiture" value="${ conducteur.marqueVoiture }" required><br> <br> 
 					
 					<label for="modeleVoiture">Modele de voiture: </label> 
-					<input type="text" id="modeleVoiture" name="modeleVoiture" value="${ conducteur.modeleVoiture }"><br> <br> 
+					<input type="text" id="modeleVoiture" name="modeleVoiture" value="${ conducteur.modeleVoiture }" required><br> <br> 
 					
 					<label for="nbrPassagers">Nombre de passagers: </label> 
-					<input type="text" id="nbrPassagers" name="nbrPassagers" value="${ conducteur.nbrPassagers }"><br> <br> 
+					<input type="text" id="nbrPassagers" name="nbrPassagers" value="${ conducteur.nbrPassagers }" required><br> <br> 
 					
 					<label for="immatriculation">Imatriculation: </label> 
-					<input type="text" id="immatriculation" name="immatriculation" value="${ conducteur.immatriculation }"><br> <br> 
+					<input type="text" id="immatriculation" name="immatriculation" value="${ conducteur.immatriculation }" required><br> <br> 
 					
 					<input type="hidden" id="statut" name="statut" value="${ conducteur.statut }"><br> <br> 
 					
@@ -65,7 +66,9 @@
 							<label for="indisponible">indisponible</label>
 					</div>
 			
-					<br> <br> <br>
+					<br> 
+					<div id="messageError"></div>
+					<br> <br>
 	
 					<div class="inputLogin">
 								<div class="reset">
@@ -86,7 +89,7 @@
 								</div>
 					</div>
 					<div id="messageAction"></div>
-				</form:form>
+				</form>
 			</div>
 			<div class="reset">
 						<div class="btnLogin">
@@ -137,7 +140,7 @@
 	</ul>
 
 </div>
-
+			
 <script src="${ pageContext.request.contextPath }/resources/js/methodesConducteur.js"></script>
 
 

@@ -13,8 +13,8 @@ import fr.transportME.model.Conducteur;
 
 @Repository
 @Transactional
-public class ConducteurDAO extends DAO<Conducteur>{
-	
+public class ConducteurDAO extends DAO<Conducteur> {
+
 	@PersistenceContext
 	private EntityManager em;
 
@@ -36,17 +36,25 @@ public class ConducteurDAO extends DAO<Conducteur>{
 
 	@Override
 	public Conducteur save(Conducteur object) {
-		return this.em.merge(object);
+		System.out.println("save Conducteur " + object.getDateNaissanceUtil());
+		try {
+			object = this.em.merge(object);
+		} catch (Exception e) {
+			System.out.println("pbe de violation de contrainte dans ConducteurDAO " + e.getMessage());
+			return null;
+		}
+		return object;
 	}
 
 	@Override
 	public Conducteur auth(String login, String mdp) {
 		return null;
 	}
-	
+
 	public List<Conducteur> findAllDispo() {
 		try {
-			TypedQuery<Conducteur> myQuery = em.createQuery("SELECT c FROM Conducteur c where c.statut = 1", Conducteur.class);
+			TypedQuery<Conducteur> myQuery = em.createQuery("SELECT c FROM Conducteur c where c.statut = 1",
+					Conducteur.class);
 			return myQuery.getResultList();
 		} catch (Exception e) {
 			e.printStackTrace();
