@@ -29,12 +29,15 @@ $jq311(document).ready(function($) {
 							dataType : "json",
 							success : function(data) {
 								
+								
 								// si on veut stopper le timer, on decommente ce code
-//								if(data.length > 0 && idIntervalDispo) {
-//									clearInterval(idIntervalDispo);
-//									idIntervalDispo = false;
-//									console.log("STOP TIMER REFRESH DISPO")
-//								}
+								// mais attention !! l'appel au service web nous permet de revenir dans cette fonction donc si on l'arrete, les boutons ne seront plus rafraichis et donc on ne pourra plus
+								// faire le cycle d'une course
+								/*if(data.idcourse > 0 && idIntervalDispo) {
+									clearInterval(idIntervalDispo);
+									idIntervalDispo = false;
+									console.log("STOP TIMER REFRESH DISPO")
+								}*/
 								
 													//On cache les boutons 
 													if (data != null)
@@ -84,7 +87,7 @@ $jq311(document).ready(function($) {
 																	   {
 																		acceptation = "disabled";
 																		refus = "disabled";
-																		demarrercourse = "disabled";
+																		demarrerCourse = "disabled";
 																	   }
 															
 															// constitution legende																														
@@ -215,12 +218,6 @@ $jq311(document).ready(function($) {
 																			}
 																	});
 																	
-																	// TODO à essayer : on arrete le timer
-																	/*if(data.length > 0 && idIntervalDispo) {
-																		clearInterval(idIntervalDispo);
-																		idIntervalDispo = false;
-																		console.log("STOP TIMER REFRESH DISPO")
-																	}*/
 																}
 																
 																$('#submitDemarrerCourse').on('click', demarrerCourse);

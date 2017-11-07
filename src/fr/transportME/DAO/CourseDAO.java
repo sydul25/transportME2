@@ -13,8 +13,8 @@ import fr.transportME.model.Course;
 
 @Repository
 @Transactional
-public class CourseDAO extends DAO<Course>{
-	
+public class CourseDAO extends DAO<Course> {
+
 	@PersistenceContext
 	private EntityManager em;
 
@@ -40,19 +40,21 @@ public class CourseDAO extends DAO<Course>{
 			myQuery.setParameter("idCourse", idCourse);
 			return myQuery.getSingleResult();
 		} catch (Exception e) {
-			System.out.println("pbe findByidCourse "+e);
+			System.out.println("pbe findByidCourse " + e);
 			return null;
 		}
 	}
-	
-	// course non commencee
+
+	// course non commencee ou commencee mais non terminée
 	public Course findByidConducteur(int idConducteur) {
 		try {
-			TypedQuery<Course> myQuery = em.createQuery("SELECT c FROM Course c where c.conducteur.id = :idConducteur and c.dateDepart is null", Course.class);
+			TypedQuery<Course> myQuery = em.createQuery(
+					"SELECT c FROM Course c where c.conducteur.id = :idConducteur and (c.dateDepart is null or c.dateArrivee is null)",
+					Course.class);
 			myQuery.setParameter("idConducteur", idConducteur);
 			return myQuery.getSingleResult();
 		} catch (Exception e) {
-			System.out.println("pbe findByidConducteur "+e);
+			System.out.println("pbe findByidConducteur " + e);
 			return null;
 		}
 	}
@@ -66,21 +68,22 @@ public class CourseDAO extends DAO<Course>{
 	public Course auth(String login, String mdp) {
 		return null;
 	}
-	
+
 	public List<Course> getClientCourses(int id) {
-		TypedQuery<Course> myCourses =  em.createQuery("FROM Course c WHERE c.client.id = :cou_client", Course.class)
+		TypedQuery<Course> myCourses = em.createQuery("FROM Course c WHERE c.client.id = :cou_client", Course.class)
 				.setParameter("cou_client", id);
 		return myCourses.getResultList();
-		
+
 	}
-	
+
 	public List<Course> getConducteurCourses(int id) {
-		TypedQuery<Course> myCourses =  em.createQuery("FROM Course c WHERE c.conducteur.id = :cou_conducteur", Course.class)
+		TypedQuery<Course> myCourses = em
+				.createQuery("FROM Course c WHERE c.conducteur.id = :cou_conducteur", Course.class)
 				.setParameter("cou_conducteur", id);
 		return myCourses.getResultList();
-		
+
 	}
-	
-	//TODO methode pour creer les comments
+
+	// TODO methode pour creer les comments
 
 }
