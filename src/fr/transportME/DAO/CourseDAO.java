@@ -3,6 +3,7 @@ package fr.transportME.DAO;
 import java.util.List;
 
 import javax.persistence.EntityManager;
+import javax.persistence.NonUniqueResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 
@@ -45,16 +46,19 @@ public class CourseDAO extends DAO<Course> {
 		}
 	}
 
-	// course non commencee ou commencee mais non terminée
-	public Course findByidConducteur(int idConducteur) {
+	// liste de courses non commencees ou commencees mais non terminées
+	public List<Course> findByidConducteur(int idConducteur) {
 		try {
 			TypedQuery<Course> myQuery = em.createQuery(
 					"SELECT c FROM Course c where c.conducteur.id = :idConducteur and (c.dateDepart is null or c.dateArrivee is null)",
 					Course.class);
 			myQuery.setParameter("idConducteur", idConducteur);
-			return myQuery.getSingleResult();
+			return myQuery.getResultList();
+		} catch (NonUniqueResultException a) {
+			System.out.println("plusieurs dispos pour le meme conducteur " + a);
+			return null;
 		} catch (Exception e) {
-			// System.out.println("pbe findByidConducteur " + e);
+			System.out.println("pbe findByidConducteur " + e);
 			return null;
 		}
 	}

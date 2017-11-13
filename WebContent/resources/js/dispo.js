@@ -164,6 +164,11 @@ $jq311(document).ready(function($) {
 																			data: JSON.stringify(course),
 																			success: function() {
 																				$("#messageAction").html("La course a été acceptée.");
+																				if(data.idcourse > 0 && idIntervalDispo) {
+																				clearInterval(idIntervalDispo);
+																				idIntervalDispo = false;
+																				console.log("STOP TIMER REFRESH DISPO")
+																				}
 																			},
 																			error: function() {
 																				$("#messageAction").html("Echec acceptation de course.");
@@ -365,7 +370,12 @@ $jq311(document).ready(function($) {
 							dataType : "json",
 							success : function(data) {
 								console.log("dans appel ajax de recherchePosClient, data.idCourse= "+data.idcourse);
-								RecherchePosClient(data.idcourse);
+								// parcourir une liste de courses 
+								data.forEach(function(element) {
+									console.log(element.idcourse);
+									// TODO reste pbe d'affichage des 2 fenetres en  meme temps
+									RecherchePosClient(element.idcourse);
+								})
 	
 	
 							}

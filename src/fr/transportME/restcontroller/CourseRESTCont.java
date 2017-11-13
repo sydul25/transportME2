@@ -80,11 +80,11 @@ public class CourseRESTCont {
 	 */
 	@RequestMapping(value = "/recuperer", method = RequestMethod.GET)
 	@ResponseBody
-	public ResponseEntity<Course> recupererCourseAttribuee(
+	public ResponseEntity<List<Course>> recupererCourseAttribuee(
 			@RequestParam(value = "idConducteur", required = false) int idConducteur) {
 
-		Course course = null;
-		course = courseDAO.findByidConducteur(idConducteur);
+		// Course course = null;
+		// List<Course> = courseDAO.findByidConducteur(idConducteur);
 
 		// retiré pour éviter les messages erreur 404 dans la console F12 quand
 		// on est dans l'écran dispo et qu'il n'y a pas de courses affectées au
@@ -94,7 +94,9 @@ public class CourseRESTCont {
 		 * ResponseEntity<Course>(HttpStatus.NOT_FOUND); }
 		 */
 
-		return new ResponseEntity<Course>(course, HttpStatus.OK);
+		// return new ResponseEntity<Course>(course, HttpStatus.OK);
+
+		return new ResponseEntity<List<Course>>(this.courseDAO.findByidConducteur(idConducteur), HttpStatus.OK);
 	}
 
 	/**

@@ -142,31 +142,12 @@ public class ConducteurRESTCont {
 		List<Conducteur> myConducteurs = this.conducteurDAO.findAllDispo();
 
 		// recherche des positions des conducteurs
-		String latlng_conducteurs;// "48.861322, 2.335196|50,4";
-		StringBuffer latlng_conducteurs_buf = new StringBuffer();
-		for (int i = 0; i < myConducteurs.size(); i++) {
-			System.out.println("lat=" + myConducteurs.get(i).getPosActuelleLat() + " lng="
-					+ myConducteurs.get(i).getPosActuelleLong());
-			if (i != 0) {
-				latlng_conducteurs_buf.append("|");
-			}
-			latlng_conducteurs_buf
-					.append(myConducteurs.get(i).getPosActuelleLat() + "," + myConducteurs.get(i).getPosActuelleLong());
-			System.out.println("latlng_conducteurs=" + latlng_conducteurs_buf.toString());
-		}
-		latlng_conducteurs = latlng_conducteurs_buf.toString();
+		String latlng_conducteurs = rechPost(myConducteurs);
+
+		String latlng_passager = lat + "," + lng;// "50.6079121,3.1672095";
 
 		// constitution url avec infos lat, lng origine et destination
-		String latlng_passager = lat + "," + lng;// "50.6079121,3.1672095";
-		System.out.println("latlng_passager=" + latlng_passager);
-
-		String cleApi = "AIzaSyAxGktaPMJOPndtOvW2AyjzHKuHVOtxbr0"; // rem : cle
-																	// à changer
-																	// quand
-																	// over_query_limit
-		String url = "https://maps.googleapis.com/maps/api/distancematrix/json?origins=" + latlng_passager
-				+ "&destinations=" + latlng_conducteurs + "&key=" + cleApi;
-		System.out.println("url appelé = " + url);
+		String url = constitutionUrl(latlng_passager, latlng_conducteurs);
 
 		// appel service distancematrix
 		RestTemplate restTemplate = new RestTemplate();
@@ -185,17 +166,8 @@ public class ConducteurRESTCont {
 			JsonNode rootMode = objMap.readValue(response.getBody(), JsonNode.class);
 			JsonNode elements = rootMode.get("rows").get(0).get("elements");
 			System.out.println(elements);
-			for (int i = 0; i < elements.size(); i++) {
-				System.out.println("distance i=" + i + " " + elements.get(i).get("distance").get("value").asInt());
-				if (elements.get(i).get("distance").get("value").asInt() <= 3000) { // TODO
-																					// mettre
-																					// en
-																					// constante
-					System.out.println("conducteur disponible " + myConducteurs.get(i).getNomUtil());
-					System.out.println(myConducteurs.get(i));
-					listCondDispo.add(myConducteurs.get(i));
-				}
-			}
+
+			parcoursJson(elements, myConducteurs, listCondDispo);
 		} catch (Exception e) {
 			System.out.println("erreur de parcours JSON " + e);
 			return new ResponseEntity<List<Conducteur>>(HttpStatus.NOT_ACCEPTABLE);
@@ -204,6 +176,51 @@ public class ConducteurRESTCont {
 		System.out.println("sortie de service");
 
 		return new ResponseEntity<List<Conducteur>>(listCondDispo, HttpStatus.OK);
+	}
+
+	private String rechPost(List<Conducteur> myConducteurs) {
+		String latlng_conducteurs;// "48.861322, 2.335196|50,4";
+		StringBuffer latlng_conducteurs_buf = new StringBuffer();
+		for (int i = 0; i < myConducteurs.size(); i++) {
+			System.out.println("lat=" + myConducteurs.get(i).getPosActuelleLat() + " lng="
+					+ myConducteurs.get(i).getPosActuelleLong());
+			if (i != 0) {
+				latlng_conducteurs_buf.append("|");
+			}
+			latlng_conducteurs_buf
+					.append(myConducteurs.get(i).getPosActuelleLat() + "," + myConducteurs.get(i).getPosActuelleLong());
+			System.out.println("latlng_conducteurs=" + latlng_conducteurs_buf.toString());
+		}
+		latlng_conducteurs = latlng_conducteurs_buf.toString();
+		return latlng_conducteurs;
+	}
+
+	private String constitutionUrl(String latlng_passager, String latlng_conducteurs) {
+
+		System.out.println("latlng_passager=" + latlng_passager);
+
+		String cleApi = "AIzaSyBTPqCszESfvGjbSodJz5LAv_Lz80T7gVo"; // rem : cle
+																	// à changer
+																	// quand
+																	// over_query_limit
+		String url = "https://maps.googleapis.com/maps/api/distancematrix/json?origins=" + latlng_passager
+				+ "&destinations=" + latlng_conducteurs + "&key=" + cleApi;
+		System.out.println("url appelé = " + url);
+		return url;
+	}
+
+	private void parcoursJson(JsonNode elements, List<Conducteur> myConducteurs, List<Conducteur> listCondDispo) {
+		for (int i = 0; i < elements.size(); i++) {
+			System.out.println("distance i=" + i + " " + elements.get(i).get("distance").get("value").asInt());
+			if (elements.get(i).get("distance").get("value").asInt() <= 20000) { // TODO
+																					// mettre
+																					// en
+																					// constante
+				System.out.println("conducteur disponible " + myConducteurs.get(i).getNomUtil());
+				System.out.println(myConducteurs.get(i));
+				listCondDispo.add(myConducteurs.get(i));
+			}
+		}
 	}
 
 }
